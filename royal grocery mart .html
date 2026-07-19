@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Royal Grocery Mart - Chanakyapuri</title>
+    <style>
+        /* ROYAL BLUE AND BLACK THEME COLORS */
+        :root {
+            --primary-blue: #0A2540;
+            --royal-blue: #4169E1;
+            --deep-black: #0F0F11;
+            --pure-black: #000000;
+            --light-bg: #1A1A24;
+            --card-bg: #242432;
+            --text-light: #F5F7FA;
+            --accent-gold: #FFD700;
+            --admin-red: #d9534f;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--deep-black);
+            color: var(--text-light);
+            min-height: 100vh;
+        }
+
+        /* HEADER & NAVIGATION */
+        header {
+            background: linear-gradient(135deg, var(--pure-black) 30%, var(--primary-blue) 100%);
+            padding: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 3px solid var(--royal-blue);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .brand {
+            text-align: center;
+            position: relative;
+            width: 100%;
+        }
+
+        .brand h1 {
+            color: var(--text-light);
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .brand h1 span {
+            color: var(--royal-blue);
+            text-shadow: 0 0 10px rgba(65, 105, 225, 0.6);
+        }
+
+        .address {
+            color: var(--accent-gold);
+            font-size: 0.9rem;
+            margin-top: 5px;
+            letter-spacing: 1px;
+        }
+
+        /* ADMIN ACCESS BUTTON */
+        .admin-login-btn {
+            position: absolute;
+            right: 0;
+            top: 10px;
+            background: transparent;
+            border: 1px solid var(--royal-blue);
+            color: var(--royal-blue);
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+        }
+        .admin-login-btn:hover {
+            background: var(--royal-blue);
+            color: white;
+        }
+
+        /* SEARCH ENGINE BAR */
+        .search-box {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 15px 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--royal-blue);
+            border-radius: 30px;
+            color: white;
+            font-size: 1.1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            background-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 15px var(--royal-blue);
+        }
+
+        /* MAIN PRODUCTS SECTION */
+        main {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            margin-bottom: 30px;
+            border-left: 5px solid var(--royal-blue);
+            padding-left: 15px;
+            font-size: 1.8rem;
+        }
+
+        /* SECRET ADMIN PANEL STYLING */
+        .admin-panel {
+            background: #1e1e2d;
+            border: 2px dashed var(--admin-red);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 35px;
+            display: none; /* Hidden by default */
+        }
+        .admin-panel h3 {
+            color: var(--admin-red);
+            margin-bottom: 15px;
+        }
+        .admin-form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+        }
+        .admin-form select, .admin-form input {
+            padding: 10px;
+            background: var(--light-bg);
+            border: 1px solid #444;
+            color: white;
+            border-radius: 6px;
+            min-width: 200px;
+        }
+        .admin-form button {
+            background: var(--admin-red);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* PRODUCT GRID */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 25px;
+        }
+
+        .product-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(65, 105, 225, 0.2);
+            border-color: var(--royal-blue);
+        }
+
+        .product-img {
+            width: 100%;
+            height: 180px;
+            background-color: var(--light-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .product-name {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-light);
+            min-height: 44px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .product-price {
+            font-size: 1.2rem;
+            color: var(--accent-gold);
+            font-weight: bold;
+        }
+
+        .buy-btn {
+            background-color: var(--royal-blue);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        .buy-btn:hover {
+            background-color: #2b52c2;
+        }
+
+        /* NO RESULTS STATE */
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px;
+            font-size: 1.2rem;
+            color: #888;
+            display: none;
+        }
+
+        /* FIREBASE DATABASE TEST SECTION */
+        .db-panel {
+            margin-top: 50px;
+            background: linear-gradient(var(--card-bg), var(--pure-black));
+            padding: 30px;
+            border-radius: 12px;
+            border-top: 3px solid var(--royal-blue);
+            text-align: center;
+        }
+        
+        .db-panel input {
+            padding: 10px 15px;
+            margin: 10px;
+            border-radius: 4px;
+            border: 1px solid var(--royal-blue);
+            background: var(--light-bg);
+            color: white;
+            width: 250px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-container">
+            <div class="brand">
+                <h1>Royal <span>Grocery Mart</span></h1>
+                <div class="address">📍 Chanakya Puri Main Hub</div>
+                <button class="admin-login-btn" id="adminLoginBtn">Admin Access</button>
+            </div>
+            
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search from 50+ Premium Groceries...">
+            </div>
+        </div>
+    </header>
+
+    <main>
+        
+        <div class="admin-panel" id="adminPanel">
+            <h3>👑 Royal Console: Edit Product Price & Name</h3>
+            <div class="admin-form">
+                <select id="adminProductSelect">
+                    </select>
+                <input type="text" id="editName" placeholder="New Product Name">
+                <input type="text" id="editPrice" placeholder="New Price (e.g. ₹150)">
+                <button id="updateProductBtn">Apply Changes</button>
+            </div>
+        </div>
+
+        <h2 class="section-title">Premium Grocery Aisle</h2>
+        
+        <div class="products-grid" id="productsGrid">
+            <div class="no-results" id="noResults">No grocery found matching your search.</div>
+        </div>
+
+        <div class="db-panel">
+            <h3>Firebase Realtime Database Hook</h3>
+            <p style="color: #888; font-size: 0.9rem; margin-bottom: 10px;">Send order or request straight to cloud</p>
+            <input type="text" id="dbData" placeholder="Enter Product Name or Query">
+            <button class="buy-btn" id="firebaseBtn" style="padding: 10px 20px;">Push to Firebase</button>
+        </div>
+    </main>
+
+    <script>
+        // 50 Pure Grocery Products Data Array (No fruits, No vegetables)
+        let productsData = [
+            { id: 1, name: "Premium Basmati Rice (5kg)", price: "₹650", img: "https://dummyimage.com/300x250/0A2540/fff&text=Basmati+Rice" },
+            { id: 2, name: "Refined Sun Flower Oil (1L)", price: "₹175", img: "https://dummyimage.com/300x250/0A2540/fff&text=Sunflower+Oil" },
+            { id: 3, name: "Pure Cow Ghee (1L)", price: "₹720", img: "https://dummyimage.com/300x250/0A2540/fff&text=Cow+Ghee" },
+            { id: 4, name: "Ashirvaad Whole Wheat Atta (10kg)", price: "₹460", img: "https://dummyimage.com/300x250/0A2540/fff&text=Wheat+Atta" },
+            { id: 5, name: "Tata Salt Iodized (1kg)", price: "₹28", img: "https://dummyimage.com/300x250/0A2540/fff&text=Tata+Salt" },
+            { id: 6, name: "Premium Sugar Crystals (2kg)", price: "₹96", img: "https://dummyimage.com/300x250/0A2540/fff&text=Sugar" },
+            { id: 7, name: "Toor Dal Premium (1kg)", price: "₹165", img: "https://dummyimage.com/300x250/0A2540/fff&text=Toor+Dal" },
+            { id: 8, name: "Moong Dal Washed (1kg)", price: "₹140", img: "https://dummyimage.com/300x250/0A2540/fff&text=Moong+Dal" },
+            { id: 9, name: "Chana Dal Polish (1kg)", price: "₹110", img: "https://dummyimage.com/300x250/0A2540/fff&text=Chana+Dal" },
+            { id: 10, name: "Kabuli Chana Big Size (1kg)", price: "₹150", img: "https://dummyimage.com/300x250/0A2540/fff&text=Kabuli+Chana" },
+            { id: 11, name: "Organic Rajma Chitra (1kg)", price: "₹180", img: "https://dummyimage.com/300x250/0A2540/fff&text=Rajma" },
+            { id: 12, name: "Premium Tea Leaves Gold (1kg)", price: "₹420", img: "https://dummyimage.com/300x250/0A2540/fff&text=Gold+Tea" },
+            { id: 13, name: "Filter Coffee Classic Blend (500g)", price: "₹290", img: "https://dummyimage.com/300x250/0A2540/fff&text=Coffee" },
+            { id: 14, name: "Full Cream Milk Powder (1kg)", price: "₹399", img: "https://dummyimage.com/300x250/0A2540/fff&text=Milk+Powder" },
+            { id: 15, name: "Catch Turmeric Powder (200g)", price: "₹55", img: "https://dummyimage.com/300x250/0A2540/fff&text=Turmeric+Powder" },
+            { id: 16, name: "MDH Kashmiri Mirch (100g)", price: "₹82", img: "https://dummyimage.com/300x250/0A2540/fff&text=Kashmiri+Mirch" },
+            { id: 17, name: "Tata Sampann Coriander Powder (200g)", price: "₹60", img: "https://dummyimage.com/300x250/0A2540/fff&text=Coriander+Powder" },
+            { id: 18, name: "Garam Masala Authentic Blend (100g)", price: "₹95", img: "https://dummyimage.com/300x250/0A2540/fff&text=Garam+Masala" },
+            { id: 19, name: "Green Cardamom Elaichi (50g)", price: "₹190", img: "https://dummyimage.com/300x250/0A2540/fff&text=Cardamom" },
+            { id: 20, name: "Whole Black Pepper Cloves (100g)", price: "₹125", img: "https://dummyimage.com/300x250/0A2540/fff&text=Black+Pepper" },
+            { id: 21, name: "Crunchy Corn Flakes Box (850g)", price: "₹310", img: "https://dummyimage.com/300x250/0A2540/fff&text=Corn+Flakes" },
+            { id: 22, name: "Instant Rolled Oats Jar (1kg)", price: "₹195", img: "https://dummyimage.com/300x250/0A2540/fff&text=Rolled+Oats" },
+            { id: 23, name: "Durum Wheat Semolina Suji (1kg)", price: "₹65", img: "https://dummyimage.com/300x250/0A2540/fff&text=Suji+Rava" },
+            { id: 24, name: "Premium Maida Refined Flour (1kg)", price: "₹58", img: "https://dummyimage.com/300x250/0A2540/fff&text=Maida" },
+            { id: 25, name: "Thick Poha Rice Flakes (1kg)", price: "₹70", img: "https://dummyimage.com/300x250/0A2540/fff&text=Thick+Poha" },
+            { id: 26, name: "Mixed Dry Fruits Celebration Pack (500g)", price: "₹599", img: "https://dummyimage.com/300x250/0A2540/fff&text=Dry+Fruits" },
+            { id: 27, name: "California Almonds Premium (250g)", price: "₹260", img: "https://dummyimage.com/300x250/0A2540/fff&text=Almonds" },
+            { id: 28, name: "Whole Cashew Nuts W240 (250g)", price: "₹295", img: "https://dummyimage.com/300x250/0A2540/fff&text=Cashews" },
+            { id: 29, name: "Dark Raisins Kishmish (250g)", price: "₹120", img: "https://dummyimage.com/300x250/0A2540/fff&text=Raisins" },
+            { id: 30, name: "Semolina Pasta Penne Packet (500g)", price: "₹98", img: "https://dummyimage.com/300x250/0A2540/fff&text=Penne+Pasta" },
+            { id: 31, name: "Instant Hakka Noodles (2Pack)", price: "₹65", img: "https://dummyimage.com/300x250/0A2540/fff&text=Noodles" },
+            { id: 32, name: "Tomato Ketchup Classic Bottle (1kg)", price: "₹145", img: "https://dummyimage.com/300x250/0A2540/fff&text=Tomato+Ketchup" },
+            { id: 33, name: "Eggless Sandwich Mayonnaise (400g)", price: "₹120", img: "https://dummyimage.com/300x250/0A2540/fff&text=Mayonnaise" },
+            { id: 34, name: "Pure Natural Honey Squeezer (500g)", price: "₹230", img: "https://dummyimage.com/300x250/0A2540/fff&text=Natural+Honey" },
+            { id: 35, name: "Mixed Fruit Jam Bottle (500g)", price: "₹160", img: "https://dummyimage.com/300x250/0A2540/fff&text=Fruit+Jam" },
+            { id: 36, name: "Cream Cracker Biscuits Multipack", price: "₹80", img: "https://dummyimage.com/300x250/0A2540/fff&text=Crackers" },
+            { id: 37, name: "Chocolate Chip Cookies Large (300g)", price: "₹120", img: "https://dummyimage.com/300x250/0A2540/fff&text=Cookies" },
+            { id: 38, name: "Roasted Salted Peanuts Pack (200g)", price: "₹60", img: "https://dummyimage.com/300x250/0A2540/fff&text=Peanuts" },
+            { id: 39, name: "Iodized Black Salt Powder (100g)", price: "₹35", img: "https://dummyimage.com/300x250/0A2540/fff&text=Black+Salt" },
+            { id: 40, name: "Premium Papad Pepper Flavour (200g)", price: "₹75", img: "https://dummyimage.com/300x250/0A2540/fff&text=Papad" },
+            { id: 41, name: "Dark Baking Chocolate Bar (200g)", price: "₹150", img: "https://dummyimage.com/300x250/0A2540/fff&text=Baking+Chocolate" },
+            { id: 42, name: "Pure Vanilla Extract Essence (30ml)", price: "₹199", img: "https://dummyimage.com/300x250/0A2540/fff&text=Vanilla+Essence" },
+            { id: 43, name: "Baking Powder Double Acting (100g)", price: "₹45", img: "https://dummyimage.com/300x250/0A2540/fff&text=Baking+Powder" },
+            { id: 44, name: "Spicy Chilli Vinegar Sauce (250ml)", price: "₹65", img: "https://dummyimage.com/300x250/0A2540/fff&text=Vinegar" },
+            { id: 45, name: "Dark Soy Sauce Authentic Premium", price: "₹90", img: "https://dummyimage.com/300x250/0A2540/fff&text=Soy+Sauces" },
+            { id: 46, name: "Premium Saffron Kesar Strands (1g)", price: "₹375", img: "https://dummyimage.com/300x250/0A2540/fff&text=Saffron+Kesar" },
+            { id: 47, name: "Desiccated Coconut Powder (200g)", price: "₹65", img: "https://dummyimage.com/300x250/0A2540/fff&text=Coconut+Powder" },
+            { id: 48, name: "Table Margarine Butter Spread (500g)", price: "₹115", img: "https://dummyimage.com/300x250/0A2540/fff&text=Butter+Spread" },
+            { id: 49, name: "Soya Chunks High Protein Pack (1kg)", price: "₹160", img: "https://dummyimage.com/300x250/0A2540/fff&text=Soya+Chunks" },
+            { id: 50, name: "Premium Vermicelli Seviyan (500g)", price: "₹68", img: "https://dummyimage.com/300x250/0A2540/fff&text=Vermicelli" }
+        ];
+
+        const grid = document.getElementById("productsGrid");
+        const searchInput = document.getElementById("searchInput");
+        const noResults = document.getElementById("noResults");
+        const adminPanel = document.getElementById("adminPanel");
+        const adminProductSelect = document.getElementById("adminProductSelect");
+
+        // Function to render products inside the UI
+        function renderProducts(products) {
+            grid.innerHTML = "";
+            grid.appendChild(noResults);
+
+            if(products.length === 0) {
+                noResults.style.display = "block";
+                return;
+            }
+
+            noResults.style.display = "none";
+            
+            products.forEach(item => {
+                const card = document.createElement("div");
+                card.className = "product-card";
+                card.innerHTML = `
+                    <div class="product-img">
+                        <img src="${item.img}" alt="${item.name}">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">${item.name}</div>
+                        <div class="product-price">${item.price}</div>
+                        <button class="buy-btn">Add to Cart</button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Populate the dropdown selector inside the admin panel
+        function populateAdminDropdown() {
+            adminProductSelect.innerHTML = "";
+            productsData.forEach(p => {
+                const opt = document.createElement("option");
+                opt.value = p.id;
+                opt.textContent = p.name;
+                adminProductSelect.appendChild(opt);
+            });
+        }
+
+        // INITIAL APPLICATION LOAD
+        renderProducts(productsData);
+        populateAdminDropdown();
+
+        // PASSWORD VERIFICATION LOGIC FOR SECURITY
+        document.getElementById("adminLoginBtn").addEventListener("click", () => {
+            const pass = prompt("Enter Secret Admin Password to Open Console:");
+            if(pass === "royal123") { // <--- EDIT SECRET PASSWORD HERE
+                adminPanel.style.display = adminPanel.style.display === "block" ? "none" : "block";
+                alert("Access Granted! Admin Panel Unlocked.");
+            } else if (pass !== null) {
+                alert("Incorrect Password! Access Denied.");
+            }
+        });
+
+        // HANDLE LIVE EDIT OF PRODUCTS FROM PANEL
+        document.getElementById("updateProductBtn").addEventListener("click", () => {
+            const selectedId = parseInt(adminProductSelect.value);
+            const newName = document.getElementById("editName").value.trim();
+            const newPrice = document.getElementById("editPrice").value.trim();
+
+            const productIndex = productsData.findIndex(p => p.id === selectedId);
+
+            if(productIndex !== -1) {
+                if(newName) productsData[productIndex].name = newName;
+                if(newPrice) productsData[productIndex].price = newPrice;
+                
+                alert("Product configuration modified succes
